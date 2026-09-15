@@ -88,23 +88,35 @@ else:
                     "Keep your tone respectful, friendly, and helpful at all times."
                 )
                 
-                contents = [user_prompt]
+                # Payload setup
+                contents_payload = []
                 
+                # Add text input
+                contents_payload.append(types.Part.from_text(text=user_prompt))
+                
+                # Add uploaded files if available
                 if uploaded_files:
-                    for uploaded_file in uploaded_files:
-                        bytes_data = uploaded_file.read()
-                        mime_type = uploaded_file.type
-                        contents.append(
-                            types.Part.from_bytes(data=bytes_data, mime_type=mime_type)
+                    for uf in uploaded_files:
+                        contents_payload.append(
+                            types.Part.from_bytes(data=uf.read(), mime_type=uf.type)
                         )
-
-                response = client.models.generate_content(
-                    model='gemini-2.5-flash',
-                    contents=contents,
-                    config=types.GenerateContentConfig(
-                        system_instruction=sys_instruct
-                    )
-                )
                 
-                st.markdown(response.text)
-                st.session_state.messages.append({"role": "assistant", "content": response.text})
+                # Add audio recording if available
+                if audio_file:
+                    contents_payload.append(
+                        types.Part.from_bytes(data=audio_file.read(), mime_type=audio_file.type)
+                    )
+
+                try:
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=contents_payload,
+                        config=types.GenerateContentConfig(
+                            system_instruction=sys_instruct
+                        )
+                    )
+                    
+                    st.markdown(response.text)
+                    st.session_state.messages.append({"role": "assistant", "content": response.text})
+                except Exception as e:
+                    st.error(f"Error generating response: {e}")
