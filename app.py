@@ -11,8 +11,7 @@ st.markdown("""
     <h4 style="margin: 0; color: #1a73e8;">💡 Welcome to Smart Family Assistant!</h4>
     <p style="margin: 5px 0 0 0; font-size: 14px;">
         Ask anything about home routines, recipes, study help, or daily tasks. Your key is safely saved in Secrets!
-    </p>st.markdown("""
-<div style="background-color: #e8f0fe; border-left: 5px solid #1a73e8; padding: 15px; border-radius: 8px; color: #1f1f1f; margin-bottom: 25px;">
+    </p>
     <h4 style="margin: 0; color: #1a73e8;">✨ Welcome to Smart Family Assistant!</h4>
     <p style="margin: 5px 0 0 0; font-size: 15px; font-weight: 500;">
         🏠 Ask anything about your home—from daily routines and recipes to study help and fun ideas!
